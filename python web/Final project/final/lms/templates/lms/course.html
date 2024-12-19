@@ -1,0 +1,75 @@
+{% extends "lms/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<div class="row mb-5">
+    <div class="col-sm-6 col-lg-6 h4">View Course</div>
+<div class="col-sm-6 col-lg-6 text-right">
+    {% if user.id == course.teacher.id %}
+    <!-- a class="btn btn-outline-primary" href="{%url 'config_course' course.id%}">Configure Course</a-->
+    <a class="btn btn-outline-primary" href="{%url 'edit_course' course.id%}">Edit Course</a></h4>
+    {% endif %}
+    <a class="btn btn-outline-primary" href="{%url 'info_course' course.id%}">Info Course</a></h4>
+</div>
+</div>
+
+<h2>{{course.title}}</h2>
+
+<section class="list-topics">
+
+    {% for topic in dic_topics %}
+    <div id="topic{{topic.id}}" class="card row-course" style="margin-bottom: 10px;">
+        <div class="card-body pb-5">
+            <div class="row">
+                <div class="col-sm-12 col-lg-12">
+                    <div>
+                        <!--span class="badge badge-primary" style="float: right">Tasks: {{topic.number_score}}/{{topic.total_score}}</span-->
+                        <h4 class="show-title mr-5">{{topic.title}}</h4>
+                        
+                    </div>
+                </div>
+
+                {% for e in topic.elements %}
+
+                <div class="col-sm-12 mb-1 row-element {%if e.type != 'label' %}card{% endif %}  {%if e.type == 'task' %}border border-primary{% endif %}">
+                    <div class="p-2 {%if e.type != 'label' %}card-body{% endif %}">
+                        <div class="row">
+                            <div class="col-sm-12 col-lg-12">
+                                {%if e.type == "label" %}
+                                {{e.text_content|safe}}
+                                {% endif %}
+                                {%if e.type == "page" %}
+                                <a class="btn btn-link" href="{% url 'page' e.id%}">{{e.title}}</a> 
+                                {% endif %}
+                                {%if e.type == "task" %}
+                                {% if user.id != course.teacher.id %}
+                                <span class="badge badge-primary" style="float: right">Score<br/>{% if e.score > -1 %} {{e.score}}{% else %}-{% endif %}</span>
+                                {% else %}
+                                <span class="badge badge-primary" style="float: right">Qualify: {{e.number_qualify}}/{{e.number_answer}}</span>
+                                {% endif %}
+                                <a class="btn btn-link mr-5" href="{% url 'task' e.id%}">{{e.title}}</a>
+                                {% endif %}
+                            </div>
+                            <div style="display: flex; position: absolute; right: 0; bottom:0;">
+
+                                {%if e.type == "task" %}
+                                {% if user.id == course.teacher.id %}
+                                <button class="btn btn-sm btn-link btn-edit-task pb-0"><a
+                                        href="{% url 'score_task' e.id%}">Score</a></button>
+                                {% endif %}
+                                {% endif %}
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="emty-topics">Not topics created</div>
+    {% endfor %}
+</section>
+{% endblock %}

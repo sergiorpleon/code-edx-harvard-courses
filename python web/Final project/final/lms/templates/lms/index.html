@@ -1,0 +1,41 @@
+{% extends "lms/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="h2">All Courses</div>
+{% for element in all_courses %}
+{%if element.state != 'inactive'%}
+<div class="card row-course {%if element.state == 'active'%}border border-primary{%endif%}{%if element.state == 'closed'%}border border-danger{%endif%}" style="margin-bottom: 10px;">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12 col-lg-12">
+                {% if user.is_authenticated %}
+                {% if user.id == element.teacher.id %}
+                <div><h4><a href="{%url 'course' element.id%}">{{element.title}}</a></h4></div>
+                <div><strong>Teacher: </strong>{{element.teacher.username}} <a class="btn btn-link pb-0" style="position: absolute; right: 0; bottom: 0;" href="{%url 'edit_course' element.id%}">Edit</a></div>
+                {% else %}
+          
+                {% if element.state == "active" or element.state == "waiting"  or element.state == "closed" %}
+                <div><h4><a href="{%url 'info_course' element.id%}">{{element.title}}</a></h4></div>
+                <div><strong>Teacher: </strong>{{element.teacher.username}} </div>
+                {% else %}
+
+                {% endif %}
+                {% endif %}
+                {% else %}
+                <div><h4>{{element.title}}</h4></div>
+                <div><strong>Teacher: </strong>{{element.teacher.username}}</div>
+                {% endif %}
+                
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+
+{% endblock %}
+
+
+{% block script %}
+{% endblock %}

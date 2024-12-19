@@ -1,0 +1,127 @@
+{% extends "lms/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+
+{% if user.id == course.teacher.id %}
+<div class="row mb-5">
+    <div class="col-sm-6 col-lg-6 h4">Edit Course</div>
+    <div class="col-sm-6 col-lg-6 text-right"><a class="btn btn-outline-primary"
+            href="{% url 'config_course' course.id%}"">Configure Course</a>
+    <a class=" btn btn-outline-primary" href="{%url 'course' course.id%}">View Course</a></h4>
+    </div>
+</div>
+{% endif %}
+
+<h2>{{course.title}}</h2>
+
+<section class="list-topics">
+    <div class="parent-topics">
+        {% for topic in dic_topics %}
+        <div id="topic{{topic.id}}" class="card row-course" style="margin-bottom: 10px;">
+            <div class="card-body pb-5">
+                <div class="row ">
+                    <div class="col-sm-12 col-lg-12">
+                        <div>
+                            <h4 class="show-title">{{topic.title}}</h4>
+                            <textarea class="form-control edit-title"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="parent-elements w-100" >
+                        {% for e in topic.elements %}
+
+                        <div class="col-sm-12 mb-1 row-element {%if e.type != 'label' %}card{% endif %}  {%if e.type == 'task' %}border border-primary{% endif %}">
+                            <div class="p-2 {%if e.type != 'label' %}card-body{% endif %}">
+                                <div class="row">
+                                    <div class="col-sm-12 col-lg-12 mb-2">
+                                        {%if e.type == "label" %}
+                                        {{e.text_content|safe}}
+                                        {% endif %}
+                                        {%if e.type == "page" %}
+                                        <a class="btn btn-link" href="{% url 'page' e.id%}">{{e.title}}</a>
+                                        {% endif %}
+                                        {%if e.type == "task" %}
+                                        <a class="btn btn-link" href="{% url 'task' e.id%}">{{e.title}}</a>
+                                        {% endif %}
+                                    </div>
+                                    <div style="display: flex; position: absolute; right: 0; bottom:0;">
+                                        {%if e.type == "label" %}
+                                        <button class="btn btn-sm btn-link btn-edit-label pb-0"><a
+                                                href="{% url 'edit_label' topic.id e.id%}">Edit</a></button>
+                                        {% endif %}
+                                        {%if e.type == "page" %}
+                                        <button class="btn btn-sm btn-link btn-edit-page pb-0"><a
+                                                href="{% url 'edit_page' topic.id e.id%}">Edit</a></button>
+                                        {% endif %}
+                                        {%if e.type == "task" %}
+                                        <button class="btn btn-sm btn-link btn-edit-task pb-0"><a
+                                                href="{% url 'edit_task' topic.id e.id%}">Edit</a></button>
+                                        {% endif %}
+                                        <button class="btn btn-sm btn-link btn-delete-element pb-0"
+                                            data-type="{{e.type}}" data-id="{{e.id}}">Delete</button>
+                                    </div>
+                                    <div style="display: flex; position: absolute; right: 0; top:0;">
+                                        <button class="btn btn-sm btn-link btn-up-element pb-0" data-id="{{e.id}}"  data-type="{{e.type}}">Up</button>
+                                        <button class="btn btn-sm btn-link btn-down-element pb-0" data-id="{{e.id}}"  data-type="{{e.type}}">Down</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div style="display: flex; position: absolute; right: 0; top:0;">
+                        <button class="btn btn-sm btn-link btn-up-topic pt-0" data-idtopic="{{topic.id}}">Up</button>
+                        <button class="btn btn-sm btn-link btn-down-topic pt-0" data-idtopic="{{topic.id}}">Down</button>
+                        <button class="btn btn-sm btn-link btn-save-topic pt-0"
+                            data-idtopic="{{topic.id}}">Save</button>
+                        <button class="btn btn-sm btn-link btn-update-topic pt-0"
+                            data-idtopic="{{topic.id}}">Edit</button>
+                        <button class="btn btn-sm btn-link btn-delete-topic pt-0"
+                            data-idtopic="{{topic.id}}">Delete</button>
+                    </div>
+                    <div style="display: flex; position: absolute; left: 0; bottom:0;">
+                        <span class="btn btn-sm btn-link btn-add-label pb-0" data-idtopic="{{topic.id}}"><a
+                                href="{% url 'edit_label' topic.id%}">Add Label</a></span>
+                        <button class="btn btn-sm btn-link btn-add-page pb-0" data-idtopic="{{topic.id}}"><a
+                                href="{% url 'edit_page' topic.id%}">Add Page</a></button>
+                        <button class="btn btn-sm btn-link btn-add-task pb-0" data-idtopic="{{topic.id}}"><a
+                                href="{% url 'edit_task' topic.id%}">Add Task</a></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="emty-topics">Not topics created</div>
+        {% endfor %}
+    </div>
+</section>
+
+<div class="card" id="button-create-topic" style="margin-bottom: 10px;">
+    <div class="card-body">
+        <form id="form-topic" method="post" action="{% url 'edit_course' course.id %}">
+            {% csrf_token %}
+            <div class="col-sm-12 col-lg-12">
+                {{ form.title}}
+            </div>
+            <div class="col-sm-12 col-lg-12">
+                <button type="submit" class="btn btn-primary">Add New Topic</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if user.id == course.teacher.id %}
+<div class="col-sm-12 col-lg-12 text-right">
+    <a class="btn btn-danger" href="{%url 'delete_course' course.id%}">Delete
+        Course</a>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block script %}
+
+<script src="{% static 'lms/course.js' %}"></script>
+{% endblock %}

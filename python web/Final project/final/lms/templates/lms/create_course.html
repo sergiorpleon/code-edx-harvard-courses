@@ -1,0 +1,48 @@
+{% extends "lms/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<section class="form-course">
+    <div class="h4 text-center">Create Course</div>
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'create_course'%}">
+        {% csrf_token %}
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <small>Title:</small>
+            </div>
+            <div class="col-sm-12">
+                {{ form.title}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <small>Description:</small>
+            </div>
+            <div class="col-sm-12">
+                {{ form.description}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <small>State:</small>
+            </div>
+            <div class="col-sm-12">
+                {{ form.state}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12 text-center">
+                <a href="{% url 'index' %}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+    </form>
+    {% endif %}
+</section>
+{% endblock %}
+
+
+{% block script %}
+{% endblock %}

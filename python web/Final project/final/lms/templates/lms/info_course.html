@@ -1,0 +1,103 @@
+{% extends "lms/layout.html" %}
+{% load static %}
+
+{% block body %}
+<section class="form-course">
+    {% if course.state == "inactive" or course.state == "waiting" %}
+    {%else%}
+    <a class="btn btn-outline-primary" href="{% url 'course' course.id%}""><strong><< Course</strong></a>
+    {% endif%}
+
+    {% if user.is_authenticated %}
+    {% endif%}
+
+    <div class=" col-sm-12">
+        <h4 class="text-center">{{course.title}}</h4>
+        </div>
+        <div class=" col-sm-12 text-center">
+            <span><strong>State: </strong>
+                {{ course.state}}</span>
+        </div>
+        <div class="card col-sm-12">
+            <div class="card-bos p-4">
+                {{ text|safe}}
+            </div>
+        </div>
+        {% if user.is_authenticated %}
+        {% if user.id == course.teacher.id %}
+        <div class="col-sm-12 text-right m-2">
+            <a class="btn btn-outline-primary" href="{%url 'config_course' course.id%}">Configure Course</a>
+            <a class="btn btn-outline-primary" href="{%url 'course' course.id%}">View Course</a>
+            <a class="btn btn-outline-primary" href="{%url 'edit_course' course.id%}">Edit Course</a>
+        </div>
+        {% else %}
+        {% if course.state == "active" or course.state == "closed" %}
+        {% if is_enrollment %}
+        <div class="col-sm-12 text-center p-2">
+            <a class="btn btn-outline-primary" href="{%url 'course' course.id%}">View Course</a>
+        </div>
+        {% endif %}
+        {% endif %}
+        {% if course.state == "waiting"%}
+        {% if not is_enrollment %}
+        <div class="col-sm-12 text-center p-2">
+            <a class="btn btn-outline-primary" href="{%url 'enrollment' course.id%}">Enrollment</a>
+        </div>
+        {% else%}
+        <div class="col-sm-12 text-center m-2">
+            {% if course.state == "active" %}
+            <div class="col-sm-12 text-center p-2">
+                <a class="btn btn-outline-primary" href="{%url 'course' course.id%}">Enrollment</a>
+            </div>
+            {% else%}
+            <div class="col-sm-12 text-center p-2">
+                <div class="alert alert-primary h5" role="alert">
+                    You are already enrolled. When the course is active you will be able to access the content.
+                </div>
+            </div>
+            {% endif%}
+        </div>
+        {% endif%}
+        {% endif%}
+        {% endif%}
+        {% endif%}
+
+        {% if is_enrollment or user.id == course.teacher.id %}
+        <div class="row mt-5">
+            <div class="col-sm-6 h5">User</div>
+            <div class="col-sm-3 h5">Tasks</div>
+            <div class="col-sm-3 h5">Score</div>
+        </div>
+        {% for e in students%}
+        <div class="card">
+            <div class="row card-box p-1">
+                <div class="col-sm-6">{{e.user.username}}</div>
+                <div class="col-sm-3">{{e.number_score_course}}/{{e.total_score_course}}</div>
+                <div class="col-sm-3">{{e.score_course}}/{{e.max_score}}</div>
+            </div>
+        </div>
+        {% empty%}
+        <div class="card">
+            <div class="row card-box p-1">
+                <div class="col-sm-6">-</div>
+                <div class="col-sm-3">-</div>
+                <div class="col-sm-3">-</div>
+            </div>
+        </div>
+        {% endfor%}
+        {% if user.id == course.teacher.id %}
+        {% if course.state == "inactive"%}
+        <div class="col-sm-12 col-lg-12 text-right m-2">
+            <a class="btn btn-danger" href="{%url 'unrollment' course.id%}">Unrollment All</a>
+        </div>
+        {% endif%}
+
+        {% endif%}
+        {% endif%}
+</section>
+
+{% endblock %}
+
+
+{% block script %}
+{% endblock %}

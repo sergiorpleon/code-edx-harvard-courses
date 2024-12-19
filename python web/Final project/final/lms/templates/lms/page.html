@@ -1,0 +1,36 @@
+{% extends "lms/layout.html" %}
+{% load static %}
+
+{% block body %}
+<section class="row">
+    <a class="btn btn-outline-primary" href="{% url 'course' course.id%}"><strong>
+            << {{course.title }}</strong></a>
+
+    
+    <div class="col-sm-12 mt-3">
+        <h4 class="text-center">{{page.title}}</h4>
+    </div>
+    </div>
+
+    <div class="col-sm-12">
+        {{ text_content|safe}}
+    </div>
+    </div>
+    {% if user.id == course.teacher.id %}
+    <div class="row">
+        <div class="col-sm-12 text-right">
+            <a class="btn btn-primary m-2" href="{% url 'edit_page' page.topic.id page.id%}"><strong>
+                    Edit Page</strong></a>
+        </div>
+    </div>
+    {% endif %}
+</section>
+
+
+{% endblock %}
+
+
+
+
+{% block script %}
+{% endblock %}

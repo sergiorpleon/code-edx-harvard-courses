@@ -1,0 +1,17 @@
+{% extends "encyclopedia/layout.html" %}
+
+{% block title %}
+    {{title}}
+{% endblock %}
+
+{% block body %}
+    <div class="card">
+        <div class="card-body">
+            <div>{{ entry|safe }}</div>
+        </div>
+    </div>
+    
+    <div style="margin-top: 10px;">
+        <a class="btn btn-secondary" href="{% url 'edit' title%}">Edit entry</a>
+    </div>
+{% endblock %}

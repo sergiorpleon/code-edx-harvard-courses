@@ -1,0 +1,59 @@
+{% extends "lms/layout.html" %}
+{% load static %}
+
+{% block body %}
+
+<section class="form-course">
+    <a class="btn btn-outline-primary" href="{% url 'edit_course' course.id%}"><strong><< Back to Edit Course</strong></a>
+    <div class="h4 text-center">Config Course</div>
+    {% if user.is_authenticated %}
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <form method="post" action="{% url 'config_course' course.id%}">
+        {% csrf_token %}
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <small>Title:</small>
+            </div>
+            <div class="col-sm-12">
+                {{ form.title}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <small>State:</small>
+            </div>
+            <div class="col-sm-12">
+                {{ form.state}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <small>Description:</small>
+            </div>
+            <div class="col-sm-12">
+                {{ form.description}}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12 text-left">
+                <a href="{% url 'edit_course' course.id%}" class="btn btn-secondary">Cancel</a>
+            
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </form>
+    {% endif %}
+    </section>
+{% endblock %}
+
+
+{% block script %}
+{% endblock %}

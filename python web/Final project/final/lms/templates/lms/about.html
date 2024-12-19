@@ -1,0 +1,172 @@
+{% extends "lms/layout.html" %}
+{% load static %}
+
+{% block body %}
+<div class="h2">About</div>
+<div class="row">
+    <div class="col-sm-12">
+        <P></P>
+        The project consists of making an LMS (Learning Management System) for online teaching.
+        </P>
+        <P>
+            The system allows the creation of courses.
+            How many a menu with the following items
+        <ul>
+            <li>-All course: Shows a page with all the courses, except the inactive ones.
+            </li>
+            <li>-My courses: Show page with the user's courses. The user will see the list of courses where they are
+            </li>
+            <li>enrolled. And below the list of the course he has created (course where he is a teacher)
+            </li>
+            <li>-Login
+            </li>
+            <li>-Logout</li>
+        </ul>
+        </P>
+        <P>
+            Within the course the teacher user (course creator) can create topics and within the topics he can create:
+            <li>-Label: Text box that will appear on the course page
+            </li>
+            <li>-Page Element that in the course is displayed as a link that leads to /page/<id> which is a page that
+                    shows
+                    the content of the page
+            </li>
+            <li>-Task Element that in the course is displayed as a link that leads to /page/<id> that shows the guidance
+                    text and where the student can respond by writing a text. The teacher will be able to see the tasks,
+                    review them and rate them from 0 to 5. On the course page, users will be able to see the score next
+                    to the title of the task.</li>
+        </P>
+        <P>
+            The system is designed not to store resources. The resources (videos, pdf, etc.) that you want to add must
+            therefore be done by adding their url. In order to add resource urls and enrich the text a little, markdown
+            is used. The elements that allow this are using the titles, all the textarea input, with the exception of
+            the teacher's comment when evaluating. Therefore, the student will be able to use it when writing an answer
+            to the task.
+        </P>
+        <P>
+            The course has 4 states
+        <ul>
+            <li>-Inactive - In this state the course will not be visible to anyone other than its creator
+            </li>
+            <li> -Waiting - In this state the course and its information page will be visible. But not its content. In
+                this state, students will be able to enroll through a button on the course information page
+            </li>
+            <li>-Active - In this state, enrolled students will be able to access the course content (The course
+                with its topics and labels, pages and tasks)
+                </i>
+            <li>-Closed - In this state, enrolled students will be able to access the course content, but will not
+                be able
+                to perform tasks</li>
+        </ul>
+        </P>
+        <P>
+            Regarding the task activity
+            Once the student answers the assignment, he or she will be able to edit it as long as the teacher does not
+            review it. Once the teacher reviews the assignment and gives a grade, the student will only be able to see
+            the content of their answer, the teacher's grade, and the comment.
+            The notes of the evaluated tasks will be shown to the student on the course page next to the title of the
+            task.
+        </P>
+        <P>
+            The teacher on the course page (not on the course editing page) will see next to the assignment a button
+            that will take him to a page that includes a pagination element, where he can scroll through the answers of
+            different students, review it, give it a grade and put a comment.
+        </P>
+        <P>
+            Only the user who created the course can access the course editing page.
+            The teacher (user who created the course) on the course editing page will be able to add a topic and using
+            an API call, without reloading the entire page, will be able to:
+        <ul>
+            <li>-Update topic title
+            </li>
+            <li>-Move the topic up and down
+            </li>
+            <li>-Delete topic
+            </li>
+            <li>-Delete tag, page or task element
+            </li>
+            <li>-Eliminate moving up and down within your topic element tag, page or task
+            </li>
+        </ul>
+        Additionally, the course edit page (edit_course/<id>) shows:
+            <ul>
+                <li>-Button to configure the course. This button takes you to a form where you can change the
+                    course title,
+                    description (information about the course) and status.
+                <li>-Button to view the course
+                </li>
+                <li>-Button to delete course, at the bottom of the page
+                </li>
+                <li>-For each topic, a button will be displayed to create a label, page or task element, which will
+                    take you
+                    to its respective form page.
+                </li>
+                <li>-For each element (label, page, label) a button will be displayed to edit the element, which
+                    will take
+                    you to its respective form page
+                </li>
+            </ul>
+            </P>
+            <P>
+                The course info page shows information about the course to the teacher and students or to a person
+                without an account created.
+            <ul>
+                <li>-Qualification
+                </li>
+                <li>-State
+                </li>
+                <li>-Description
+                    It also shows students and teachers
+                </li>
+                </li>-List of enrolled students and activities carried out of the total and total grade with respect
+                to the
+                maximum possible grade
+                To teacher
+                </li>
+                <li>-If the teacher accesses and the course is inactive, there will be a button to unenroll
+                    students
+                </li>
+            </ul>
+            </P>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <h4>
+            Basic writing and formatting syntax
+        </h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12">
+        <P>
+            Markdown is a lightweight markup language that simplifies the creation of formatted documents. Here are some
+            of its advantages and how you can take advantage of it:
+        </P>
+        <P>
+            Ease of use: Markdown uses a simple syntax based on text characters to apply styles such as bold, italics,
+            lists, links, and headings1.
+        </P>
+        <P>
+            Transformation to other formats: It is useful for creating documents that can later be converted to other
+            formats, such as HTML2. For example, if you need to write an article for the web, you can write it in
+            Markdown and then export it to HTML.
+        </P>
+        <P>
+            Create sophisticated formatting for your prose and code on GitHub with simple syntax.
+        </P>
+    </div>
+    <div class="col-sm-12">
+        <a
+            href="https://docs.github.com/es/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax">Documentation
+            about MarkDown</a>
+
+
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block script %}
+{% endblock %}

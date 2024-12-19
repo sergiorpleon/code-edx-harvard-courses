@@ -1,0 +1,3 @@
+
+*.pyc
+/encyclopedia/__pycache__

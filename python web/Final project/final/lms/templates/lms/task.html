@@ -1,0 +1,75 @@
+{% extends "lms/layout.html" %}
+{% load static %}
+
+{% block body %}
+<section class="row">
+    {% if user.id == course.teacher.id %}
+    <a class="btn btn-outline-primary" href="{% url 'edit_course' course.id%}"><strong>
+            << {{course.title }}</strong></a>
+    {% else %}
+    <a class="btn btn-outline-primary" href="{% url 'course' course.id%}"><strong>
+            << {{course.title }}</strong></a>
+    {% endif %}
+    <div class="col-sm-12 mt-3">
+        <h4 class="text-center">{{ task.title}}</h4>
+    </div>
+
+    <div class="col-sm-12">
+        {{ text_content|safe}}
+    </div>
+    {% if user.id == course.teacher.id %}
+    {% else %}
+    {%if score == -1 and course.state == 'active' %}
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <form style="width: 100%" method="post" action="{% url 'task'  task.id %}">
+        {% csrf_token %}
+        <div class="form-group row">
+            <div class="col-sm-12">
+                {{ form.text }}
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <a class="btn btn-secondary mr-2" href="{% url 'course' course.id%}">
+                    Cancel</a>
+                <input class="btn btn-primary" type="submit" value="Save" />
+            </div>
+        </div>
+    </form>
+    {% else %}
+
+    <div class="col-sm-12 card">
+        <div class="card-box p1">
+            {{text|safe}}
+        </div>
+    </div>
+    <div class="col-sm-12"><strong>Score: </strong>{{score}}</div>
+    <div class="col-sm-12 mt-2"><small>Explanation of teacher:</small></div>
+    <div class="col-sm-12">{{explanation}}
+    {% endif %}
+    {% endif %}
+
+    {% if user.id == course.teacher.id %}
+
+        <div class="col-sm-12 text-right">
+            <a class="btn btn-primary m-2" href="{% url 'score_task' task.id%}">
+                Score Task</a>
+            <a class="btn btn-primary m-2" href="{% url 'edit_task' task.topic.id task.id %}">
+                    Edit Task</a>
+        </div>
+    {% endif %}
+
+</section>
+{% endblock %}
+
+
+{% block script %}
+{% endblock %}
