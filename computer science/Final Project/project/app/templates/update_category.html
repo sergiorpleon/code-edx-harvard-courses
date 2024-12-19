@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Events
+{% endblock %}
+
+{% block main %}
+<h1 class="mb-5">Create Category</h1>
+
+<!-- Category create form -->
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="form-group row mb-3">
+
+        {{ form.name.label(class="form-label col-sm-2 col-form-label") }}
+        {{ form.name(class="form-control col", size=32) }}
+        {% for error in form.name.errors %}
+        <span class="col-sm-10 offset-sm-2" style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+
+    </div>
+    
+    <div class="row">
+        
+        <div class="col">
+            {{ form.save(class="btn btn-primary") }}
+            <a class="btn btn-secondary" href="{{ url_for('event.list_events') }}">Cancel</a>
+
+        </div>
+        
+    </div>
+</form>
+{% endblock %}

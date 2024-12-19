@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Events
+{% endblock %}
+
+{% block main %}
+<h1>Survey</h1>
+
+
+{% if current_user.is_authenticated %}
+
+<!-- Survey list of option with button for vote -->
+<div class="vote text-start">
+    {{ocurrence.text}}
+    <div class="text-start mt-2 mb-5">
+        {% for o in ocurrence.options %}
+        <div class="mb-1">
+
+            <form
+                action="{{ url_for('ocurrence.vote', event_id=ocurrence.event.id, ocurrence_id=ocurrence.id, option_id=o.id) }}"
+                method="POST" style="display:inline;">
+                <input name="csrf_token" type="hidden" value="{{ csrf_token() }}" />
+                <button class="btn btn-outline-primary btn-sm" style="border-radius: 40%;" type="submit">O</button>
+            </form>
+            {{o.option}}
+        </div>
+        {% endfor %}
+    </div>
+    <a class="btn btn-secondary" href="{{ url_for('event.view_event', event_id=event_id) }}">Back</a>
+
+</div>
+{% else %}
+<h2>For vote</h2>
+<a class="btn btn-primary" href="{{ url_for('user.login') }}">Login</a>
+
+{% endif %}
+
+{% endblock %}

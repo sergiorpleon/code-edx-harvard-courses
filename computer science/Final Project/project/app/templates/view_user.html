@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Events
+{% endblock %}
+
+{% block main %}
+<h1>View User</h1>
+
+<!-- View of user -->
+<div class="row mb-3">
+    <div class="col-sm-2">Name: </div><div class="col text-start">{{ user.name }}</div>
+</div>
+<div class="row mb-3">
+    <div class="col-sm-2">Email: </div><div class="col-sm-10 text-start">{{ user.email }}</div>
+</div>
+<div class="row mb-3">
+    <div class="col-sm-2">Role: </div><div class="col text-start">{{ user.role.name }}</div>
+</div>
+<div class="row mb-3">
+    <div class="text-start">
+        <a class="btn btn-secondary" href="{{ url_for('user.list_users') }}">Back</a>
+    </div>
+</div>
+{% endblock %}

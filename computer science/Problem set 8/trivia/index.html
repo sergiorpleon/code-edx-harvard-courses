@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+    <title>Trivia!</title>
+    <script>
+        // TODO: Add code to check answers to questions
+        document.addEventListener('DOMContentLoaded', function () {
+
+            //Quesion 1
+            document.querySelectorAll("#Question1 button").forEach(function (button) {
+                button.addEventListener("click", function (e) {
+                    if (button.innerHTML == "1 people per 6 sheep") {
+                        button.style.background = "green";
+                        button.querySelector("#Question1 .feedback").innerHTML = "Correct";
+                    } else {
+                        button.style.background = "red";
+                        document.querySelector("#Question1 .feedback").innerHTML = "Incorrect";
+                    }
+
+                    e.preventDefault();
+                });
+            });
+
+
+            //Quesion 2
+            document.querySelector("#Question2 button").addEventListener("click", function (e) {
+                let input = document.querySelector('#Question2 input');
+                if (input.value === 'Switzerland') {
+                    this.style.background = "green";
+                    document.querySelector("#Question2 .feedback").innerHTML = "Correct";
+                } else {
+                    this.style.background = "red";
+                    document.querySelector("#Question2 .feedback").innerHTML = "Incorrect";
+                }
+
+                e.preventDefault();
+            });
+
+        });
+
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Trivia!</h1>
+    </div>
+
+    <div class="container">
+        <div class="section" id="Question1">
+            <h2>Part 1: Multiple Choice </h2>
+            <hr>
+            <!-- TODO: Add multiple choice question here -->
+            <h3>What is the aproximate ratio of people to sheep in New Zealand?</h3>
+            <div>
+                <button>6 people per 1 sheep</button>
+                <button>3 people per 1 sheep</button>
+                <button>1 people per 1 sheep</button>
+                <button>1 people per 3 sheep</button>
+                <button>1 people per 6 sheep</button>
+            </div>
+            <p class="feedback"></p>
+
+        </div>
+
+        <div class="section" id="Question2">
+            <h2>Part 2: Free Response</h2>
+            <hr>
+            <!-- TODO: Add free response question here -->
+            <h3>In witch country is it illegal to own only one guinea pig, as a lone guinea pig might get lonely?</h3>
+            <div><input type="text" /><button>Check answer</button></div>
+            <p class="feedback"></p>
+        </div>
+    </div>
+</body>
+
+</html>

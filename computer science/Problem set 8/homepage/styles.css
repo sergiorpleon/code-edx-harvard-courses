@@ -1,0 +1,78 @@
+/* primary site color #d19441 */
+
+/*secion banner*/
+.banner {
+    background-image: url(img/tableero&piezas4.jpg);
+    background-size: cover;
+    background-position: bottom;
+    min-height: 300px;
+}
+
+.banner>div {
+    margin: 50px 20px;
+    display: inline-block;
+    text-align: center;
+    width: 100%;
+}
+
+.banner>div>h1 {
+    text-shadow: 3px 2px 2px white;
+}
+
+.banner>div>p {
+    max-width: 800px;
+    padding: 30px 20px;
+    font-size: 1.2em;
+    background-color: #851B;
+    color: white;
+    margin: auto;
+}
+
+/*secion play*/
+.play .center {
+    display: flex;
+    background-color: #d19441;
+}
+
+.play .center>div {
+    align-content: space-evenly;
+}
+
+.play .center.bottom {
+    display: block;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+/* footer */
+footer{
+    background-color: black;
+    padding: 20px;
+    text-align: center;
+    color: white;
+}
+
+
+/**/
+#history .accordion-header>button{
+    font-size: 20px;
+}
+
+/**/
+
+.excercise-orientation{
+    padding: 20px;
+    background-color: burlywood;
+}
+.excercise{
+    text-align: center;
+}
+.excercise input{
+    width: 141px;
+}
+.excercise button{
+    padding: 2px 10px;
+    border-radius: 0px;
+    vertical-align: top;
+}
+

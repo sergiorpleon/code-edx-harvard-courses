@@ -1,0 +1,13 @@
+Question 1: If songs.db contains the top 100 songs of one listener from 2018, how would you characterize their audio aura?
+Answer:
+Creating a formula that helps us characterize the aura from energy, valence and danceability.
+SELECT AVG(energy) AVG(valence) AVG(danceability) FROM songs;
+0.65906|0.484443|0.71646
+(0.65906, 0.484443, 0.71646) * 255 = (168,123,182)
+rgb(168,123,182)
+Purple => This aura color pairs well with those who are passionate about music. Purple auras are tuned to be uplifted, entertained, and moving as they navigate the twists and turns of their day.
+Blue (to a lesser extent) => Blues is melancholic or emotional, and this tone reflects listeners who seek out music to feel their feelings out loud.
+
+Question 2:Hypothesize about why the way you’ve calculated this aura might not be very representative of the listener. What better ways of calculating this aura would you propose?
+Answer:
+The number of plays made by the user is not taken into account when calculating the aura. To improve the aura calculation, I think it is important to take into account the number of plays of the song by the user. In my opinion, a table of users and a table that relates user, songs and number of plays made by the user should be included.

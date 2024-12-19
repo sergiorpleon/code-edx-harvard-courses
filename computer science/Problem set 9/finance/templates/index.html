@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Finance
+{% endblock %}
+
+{% block main %}
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>
+                Symbol
+            </th>
+            <th class="text-end">
+                Shares
+            </th>
+            <th class="text-end">
+                Price
+            </th>
+            <th class="text-end">
+                Total
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for key, value in stocks.items() %}
+        <tr>
+            <td>{{key}}</td>
+            <td class="text-end">{{value}}</td>
+            <td class="text-end">{{prices[key]|usd}}</td>
+            <td class="text-end">{{(value*prices[key])|usd}}</td>
+        </tr>
+
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="2"></td>
+            <td class="text-end">Cash: </td>
+            <td class="text-end">{{cash|usd}}</td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+            <td class="text-end">TOTAL:</td>
+            <td class="text-end">{{total|usd}}</td>
+        </tr>
+    </tfoot>
+
+</table>
+
+{% endblock %}

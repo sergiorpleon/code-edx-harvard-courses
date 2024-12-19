@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Events
+{% endblock %}
+
+{% block main %}
+<h1 class="mb-5">{{title}}</h1>
+
+<!-- Event Ocurrence form for create and edit -->
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="form-group row mb-3">
+        {{ form.text.label(class="form-label col-sm-2 col-form-label") }}<br>
+        {{ form.text(class="form-control col mh-150", size=40) }}<br>
+        {% for error in form.text.errors %}
+        <span class="col-sm-10 offset-sm-2" style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div class="form-group row mb-3">
+        {{ form.ocurrence_type.label(class="form-label col-sm-2 col-form-label") }}<br>
+        {{ form.ocurrence_type(class="form-control col", id="ocurrence_type") }}<br>
+        {% for error in form.ocurrence_type.errors %}
+        <span class="col-sm-10 offset-sm-2" style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div id="survey-options" style="display: none;">
+        <h3>Survey Options</h3>
+        <!-- Options for survey case -->
+        {% for option in form.options %}
+        <div class="form-group row mb-3">
+            <div class="form-label col-sm-2 col-form-label">{{loop.index}}</div><br>
+            {{ option.option(class="form-control col", size=40) }}<br>
+            {% for error in option.option.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col"></div>
+        <div class="col">
+            {{ form.submit(class="btn btn-primary") }}
+            <a class="btn btn-secondary" href="{{ url_for('event.view_event', event_id=event_id) }}">Cancel</a>
+        </div>
+
+        <div class="col"></div>
+    </div>
+</form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const occTypeSelect = document.getElementById('ocurrence_type');
+        const surveyOptionsDiv = document.getElementById('survey-options');
+
+        // Función para manejar el cambio en el tipo de ocurrencia
+        function updateSurveyOptionsDisplay() {
+            if (occTypeSelect.value === 'SURVEY') {  // Asegúrate de que 'survey' sea el valor correcto
+                surveyOptionsDiv.style.display = 'block';  // Mostrar opciones de encuesta
+            } else {
+                surveyOptionsDiv.style.display = 'none';  // Ocultar opciones de encuesta
+            }
+        }
+
+        // Agregar el listener para el cambio en el select
+        occTypeSelect.addEventListener('change', updateSurveyOptionsDisplay);
+
+        // Llamar a la función al cargar la página para establecer el estado inicial
+        updateSurveyOptionsDisplay();
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,23 @@
+10 HTML tag:
+ <section>
+ <h1>
+ <ul>
+ <li>
+ <img>
+ <a>
+ <table>
+ <strong>
+ <hr>
+ <footer>
+ ...
+
+CSS properties:
+ text-align: center;
+ font-size: 20px;
+ width: 100%;
+ margin: 50px 20px;
+ background-image: url(img/tableero&piezas4.jpg);
+
+Use Javascript for check if chess notation of jaque mate is correct play, and updated progress bar.
+
+Use Boostrap for nav menu, for slider of image, for accordion, for progress bar, etc.
